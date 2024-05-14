@@ -18,7 +18,6 @@ public class MovieManiaApplication {
 @RestController
 @RequestMapping("/api")
 class HelloWorldController {
-
 	@GetMapping("/hello")
 	public String helloWorld() {
 		return "Hello, World!";
