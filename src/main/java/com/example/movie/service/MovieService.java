@@ -1,6 +1,8 @@
 package com.example.movie.service;
 
 import com.example.movie.model.Movie;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -11,6 +13,14 @@ import java.util.List;
 
 @Service
 public class MovieService {
+	
+	private final List<Movie> movies;
+
+    @Autowired
+    public MovieService() {
+        this.movies = readCsvFile();
+    }
+	
 	public List<Movie> readCsvFile() {
         List<Movie> movies = new ArrayList<>();
 
@@ -73,5 +83,12 @@ public class MovieService {
     private String[] parseGenres(String genres) {
         
         return genres.split(",");
+    }
+    
+    public Movie getMovieById(int id) {
+        return movies.stream()
+                     .filter(movie -> movie.getId() == id)
+                     .findFirst()
+                     .orElse(null); // Return null if movie with given ID is not found
     }
 }
